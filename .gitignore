@@ -1,0 +1,19 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Worktrees
+.worktrees/
+
+# Node / Python build artifacts
+node_modules/
+__pycache__/
+*.pyc
+.env
+.env.local

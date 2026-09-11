@@ -1,0 +1,56 @@
+# Implementation Plan: {{PROJECT_TITLE}}
+
+**Project:** `{{PROJECT_NAME}}`  
+**Tracker:** `{{TRACKER_TYPE}}`  
+**Created:** {{CREATED_AT}}  
+**Last Updated:** {{UPDATED_AT}}
+
+---
+
+## 1. Overview & Execution Strategy
+<!-- High-level strategy for delivering this project incrementally in parallelizable vertical slices. -->
+
+---
+
+## 2. Feature Flags
+<!-- If post-MVP or risky production release, define the feature flags gating these efforts. -->
+
+| Flag Key | Purpose | Default | Target Removal |
+| :--- | :--- | :--- | :--- |
+| `{{FLAG_KEY}}` | {{FLAG_PURPOSE}} | `false` | Post-launch validation |
+
+---
+
+## 3. Work Efforts Master Index
+
+| ID | Title | Phase | Prerequisites | Tracker Ref | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| WE-01 | Setup Schema & Flags | Phase 0 | None | {{TRACKER_REF_01}} | planned |
+| WE-02 | Core Logic Slice | Phase 1 | WE-01 | {{TRACKER_REF_02}} | planned |
+| WE-03 | Secondary Feature Slice | Phase 1 | WE-01 | {{TRACKER_REF_03}} | planned |
+| WE-04 | End-to-End Verification | Phase 2 | WE-02, WE-03 | {{TRACKER_REF_04}} | planned |
+
+---
+
+## 4. Dependency Graph
+
+```mermaid
+flowchart TD
+    WE01["WE-01: Setup Schema & Flags"] --> WE02["WE-02: Core Logic Slice"]
+    WE01 --> WE03["WE-03: Secondary Feature Slice"]
+    WE02 --> WE04["WE-04: End-to-End Verification"]
+    WE03 --> WE04
+```
+
+---
+
+## 5. Phase Breakdown & Details
+
+### Phase 0: Prerequisites & Scaffolding
+- **Goal**: Unblock parallel work streams by establishing schemas, base configurations, and flags.
+
+### Phase 1: Vertical Feature Slices
+- **Goal**: Implement independent, end-to-end shippable units of functionality.
+
+### Phase 2: Hardening & Verification
+- **Goal**: End-to-end integration tests, telemetry, rollout, and documentation.

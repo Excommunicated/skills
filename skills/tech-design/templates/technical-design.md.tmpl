@@ -1,0 +1,76 @@
+# Technical Design: {{PROJECT_TITLE}}
+
+**Project:** `{{PROJECT_NAME}}`  
+**Status:** Designed  
+**Created:** {{CREATED_AT}}  
+**Last Updated:** {{UPDATED_AT}}
+
+---
+
+## 1. System Architecture & Component Overview
+<!-- Describe the high-level technical architecture, component interactions, and data flows. -->
+```
+<!-- Insert Mermaid diagram or architecture text flow here -->
+```
+
+### Component Breakdown
+- **Component A**: Role and responsibilities.
+- **Component B**: Role and responsibilities.
+
+---
+
+## 2. Data Models & Schema Changes
+<!-- Detail database migrations, ORM entities, state shapes, or schema alterations. -->
+
+### Schema Updates
+- **Table / Entity**: `name`
+  - Field: `field_name` (type, constraints, default)
+  - Indexes:
+  - Migration notes:
+
+---
+
+## 3. Interface & API Contracts
+<!-- Exact signatures, endpoints, payloads, types, or CLI interfaces. -->
+
+### Endpoints / Signatures
+```typescript
+// Insert interface definitions, types, or function signatures here
+```
+
+---
+
+## 4. Requirements Traceability Matrix
+<!-- Map every requirement from requirements.md to concrete files and code changes. -->
+
+| Req ID | Requirement Summary | Target Files | Nature of Code Change |
+| :--- | :--- | :--- | :--- |
+| FR-1 | ... | `src/...` | Add new handler and validate payload |
+| FR-2 | ... | `src/...` | Update database query to support filter |
+| NFR-1 | ... | `config/...` | Add timeout and retry logic |
+
+---
+
+## 5. Error Handling & Edge Cases
+<!-- How errors are caught, handled, logged, and recovered from. -->
+- **Edge Case 1**: Description and mitigation.
+- **Failure Mode 2**: Handling and fallback behavior.
+
+---
+
+## 6. Testing & Verification Strategy
+<!-- Specific unit, integration, and end-to-end tests required to verify changes. -->
+- **Unit Tests**:
+  - `path/to/test.spec.ts`: Test cases...
+- **Integration Tests**:
+  - Scenarios covering multi-component flows.
+- **Manual Verification / Observability**:
+  - Commands or logs to verify in staging/local environment.
+
+---
+
+## 7. Migration, Rollout & Compatibility
+<!-- Backward compatibility, feature flags, rollback plan, or database migration sequencing. -->
+- **Backward Compatibility**: Any breaking changes to existing consumers?
+- **Deployment Sequencing**: Steps to deploy (e.g. migrate schema first, then deploy code).
+- **Rollback Plan**: Procedure to revert if issues occur.
