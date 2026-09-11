@@ -8,14 +8,15 @@
 ---
 
 ## 1. System Architecture & Component Overview
-<!-- Describe the high-level technical architecture, component interactions, and data flows. -->
+<!-- Describe the high-level technical architecture, component interactions, packaging model (e.g. single-binary embed vs decoupled containers), modular organization (e.g. vertical slice vs layered), and data flows. -->
 ```
 <!-- Insert Mermaid diagram or architecture text flow here -->
 ```
 
 ### Component Breakdown
-- **Component A**: Role and responsibilities.
-- **Component B**: Role and responsibilities.
+- **Component A**: Role, responsibilities, and boundary interfaces.
+- **Component B**: Role, responsibilities, and boundary interfaces.
+
 
 ---
 
@@ -70,7 +71,8 @@
 ---
 
 ## 7. Migration, Rollout & Compatibility
-<!-- Backward compatibility, feature flags, rollback plan, or database migration sequencing. -->
+<!-- Backward compatibility, packaging & build pipeline (e.g. asset bundling, single binary compilation), feature flags, rollback plan, or database migration sequencing. -->
+- **Packaging & Build Pipeline**: Build steps, asset embedding, and binary/container artifacts.
 - **Backward Compatibility**: Any breaking changes to existing consumers?
 - **Deployment Sequencing**: Steps to deploy (e.g. migrate schema first, then deploy code).
 - **Rollback Plan**: Procedure to revert if issues occur.

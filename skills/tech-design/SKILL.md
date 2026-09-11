@@ -100,6 +100,8 @@ Conduct the interview in structured rounds using the grilling protocol:
 - Ask the engineer for decisions on each item before moving to broader architecture.
 
 ### Phase 2: Probe Architectural Decisions
+- Architectural patterns & module boundaries (vertical slice vs layered, API-first contract decoupling).
+- Deployment packaging & hosting footprint (single-binary embedding vs multi-tier/containerized services).
 - Data models & database schema migrations (nullability, indexes, constraints).
 - API & interface contracts (endpoints, types, signatures, error codes).
 - Error boundaries, timeouts, retry policies, and edge cases.
@@ -158,6 +160,6 @@ Continue rounds until the engineer confirms all architectural decisions are reso
 3. **Prompt User**:
    - Ask the user:
      > "Would you like me to update the `tech-design` skill with any improvements based on this run?"
-   - If approved, apply updates directly to `~/.agents/skills/tech-design/`.
+   - If approved, apply updates directly to `~/repos/skills/skills/tech-design/` (or `~/.agents/skills/tech-design/`).
 
 **Completion Criterion:** Self-evaluation performed and user feedback prompted.

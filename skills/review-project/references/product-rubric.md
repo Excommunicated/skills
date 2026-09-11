@@ -8,6 +8,8 @@ This rubric guides the stakeholder interview during `review-project`. The review
 
 ### A. Persona & Problem Alignment
 - Who is the intended primary user / developer / system consuming this?
+- Are roles additive or mutually exclusive? Can a single user hold multiple concurrent roles (e.g., Admin, Assignor, Parent, Practitioner) without needing separate accounts?
+- How does a user manage linked entities or delegations (e.g., parent-child guardianship, multi-team affiliation)?
 - Is the problem statement grounded in an observable pain point?
 - What triggers the user to interact with this feature or system?
 

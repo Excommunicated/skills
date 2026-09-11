@@ -31,6 +31,14 @@ This rubric guides the technical exploration and engineer interview during `tech
 - Are error messages informative without leaking sensitive internal details?
 - Are structured logs or metrics needed to observe this feature in production?
 
+### F. Architecture Patterns & Modularity
+- Does the system benefit from a **Vertical Slice Architecture** (organizing by feature module with self-contained handlers, services, DTOs, and queries) to avoid sprawling horizontal layers and simplify future microservice/serverless extraction?
+- Is the system designed **API-first**, exposing clear JSON/REST or RPC interfaces that decouple frontend presentation from backend logic and prevent duplication across multiple current or future clients (web SPA, mobile apps, third-party consumers)?
+
+### G. Packaging & Deployment Footprint
+- Can the deployment footprint be simplified via **single-binary packaging** (e.g., Go `embed.FS` or Rust `rust-embed` bundling frontend SPA static assets directly into the server executable)?
+- If serving an embedded SPA, is HTML5 History fallback routing handled cleanly for non-asset client-side routes without breaking API subrouters?
+
 ---
 
 ## 2. Incremental Update Heuristics (Re-running `tech-design`)
