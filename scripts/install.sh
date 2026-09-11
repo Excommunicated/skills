@@ -101,7 +101,7 @@ install_to_dir() {
 # Determine target directories based on harness and scope
 if [[ "${HARNESS}" == "all" || "${HARNESS}" == "antigravity" ]]; then
   if [[ "${SCOPE}" == "global" ]]; then
-    install_to_dir "${HOME}/.agents/skills" "Antigravity CLI (Global)"
+    install_to_dir "${HOME}/.gemini/config/skills" "Antigravity CLI (Global)"
   else
     install_to_dir "./.agents/skills" "Antigravity CLI (Local Workspace)"
   fi

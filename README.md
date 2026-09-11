@@ -53,7 +53,7 @@ cd ~/repos/skills
 ### Installation by Harness
 
 #### Google Antigravity CLI
-- **Global**: Symlink or copy skills to `~/.agents/skills/`:
+- **Global**: Symlink or copy skills to `~/.gemini/config/skills/`:
   ```bash
   ./scripts/install.sh --harness antigravity --global --link
   ```
