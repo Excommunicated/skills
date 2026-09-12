@@ -108,7 +108,17 @@ Upon engineer sign-off:
    git worktree prune
    ```
 3. **Update Documentation & Tracker**:
-   - Set status to `completed` in the effort document (`efforts/` or close GitHub issue).
+   - **If Tracker is `local`**:
+     - Set status to `completed` in the effort document (`docs/projects/<project-name>/efforts/WE-{NN}-...md`).
+   - **If Tracker is `github`**:
+     - Synchronize issue labels:
+       ```bash
+       gh issue edit <issue-number> --repo "<repo>" --remove-label status:review-ready --add-label status:completed
+       ```
+     - Close the GitHub issue:
+       ```bash
+       gh issue close <issue-number> --repo "<repo>" --reason "completed"
+       ```
    - In `docs/projects/<project-name>/implementation-plan.md`, update the status column to `completed`.
    - Append review and merge decisions to `docs/projects/<project-name>/decisions.md` (`[DEC-XXX]`).
 
