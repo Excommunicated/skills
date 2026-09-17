@@ -39,14 +39,37 @@ When a defect or gap is identified during review:
 
 ---
 
-## 3. Merge & Worktree Cleanup Operations
+## 3. Remote PR Pre-Check, Merge & Worktree Cleanup Operations
 
-### A. Merge Operations
-- **GitHub PR**:
+### A. Remote PR Pre-Check
+Before squash merging locally, query GitHub CLI for PR status:
+```bash
+# Check if PR is already merged remotely
+gh pr list --head "effort/<project-name>/<effort-id>" --state merged --json number,title,mergedAt,baseRefName
+
+# Check if an open PR exists
+gh pr list --head "effort/<project-name>/<effort-id>" --state open --json number,title,url,baseRefName
+```
+
+### B. Merge & Fast-Forward Operations
+- **Pre-Check: PR Already Merged Remotely**:
+  If the PR was already merged upstream via GitHub UI or CLI, **do not** perform a local squash merge (which would cause local `<base-branch>` to diverge from `origin/<base-branch>`). Seamlessly fetch and fast-forward:
+  ```bash
+  git checkout <base-branch>
+  git fetch origin <base-branch>
+  git merge --ff-only origin/<base-branch>
+  git branch -D "effort/<project-name>/<effort-id>" 2>/dev/null || true
+  ```
+- **Pre-Check: Open GitHub PR**:
+  Merge the PR via GitHub CLI, then fast-forward the local base branch:
   ```bash
   gh pr merge <pr-number> --repo "<repo>" --squash --delete-branch
+  git checkout <base-branch>
+  git fetch origin <base-branch>
+  git merge --ff-only origin/<base-branch>
+  git branch -D "effort/<project-name>/<effort-id>" 2>/dev/null || true
   ```
-- **Local Branch Merge**:
+- **Local Branch Merge (No Remote PR)**:
   ```bash
   git checkout <base-branch>
   git pull origin <base-branch> 2>/dev/null || true
@@ -55,10 +78,10 @@ When a defect or gap is identified during review:
   git branch -D "effort/<project-name>/<effort-id>"
   ```
 
-### B. Worktree Cleanup
-After a successful merge, remove the isolated worktree:
+### C. Worktree Cleanup
+After a successful merge or fast-forward, remove the isolated worktree:
 ```bash
-git worktree remove ".worktrees/<project-name>-<effort-id>"
+git worktree remove ".worktrees/<project-name>-<effort-id>" 2>/dev/null || true
 git worktree prune
 ```
 

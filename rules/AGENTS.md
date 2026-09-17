@@ -48,9 +48,10 @@ flowchart LR
    - Produces a structured commit and marks the effort `review_ready`.
 
 6. **Review Work Effort (`review-effort`)**:
+   - Pre-checks remote PR status (`gh pr list --state merged / open`) to prevent base branch divergence on `develop` or `main`.
    - Conducts a two-axis review: spec traceability against the diff and automated test suite execution.
    - Offers immediate patching or formal change requests.
-   - Squash-merges the verified branch, removes the isolated worktree, updates tracker status to `completed`, and announces newly unblocked downstream efforts.
+   - Squash-merges or fast-forwards the verified branch from origin, removes the isolated worktree, updates tracker status to `completed`, and announces newly unblocked downstream efforts.
 
 7. **Complete Project (`complete-project`)**:
    - Reconciles delivered efforts against initial requirements (allowing formal deferrals with logged decisions).
