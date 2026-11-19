@@ -53,11 +53,14 @@ Fresh git worktrees omit gitignored directories (`node_modules/`, `frontend/dist
 - **Never** `cp -R` build artifacts from the root working tree into a worktree.
 - Instead, build the required assets in-place inside `<work-dir>` using the repository's `Makefile` targets (for example, `make -C <worktree> frontend-install frontend-build` or `make -C <worktree> test`).
 
+### B. Avoiding Stale Go Test Cache After Sandboxed Runs
+When an initial `go test ./...` (or `make test`) run executes inside a restricted sandbox where Docker or loopback sockets are blocked, Go may cache `SKIP` results for integration/migration tests. When re-running outside the sandbox, pass `-count=1` (e.g., `go test -count=1 -race ./...`) so every package executes uncached.
+
 ---
 
 ## 3. Commit Message Standard
 
-Commits created by `execute-effort` must clearly document the effort and verified criteria:
+Commits created by `execute-effort` must clearly document the effort and verified criteria. Prefer writing the multi-line message to a scratch file and committing with `git commit -F <msg-file>` to avoid shell quoting or escaping issues:
 
 ```text
 [{{PROJECT_NAME}}][{{EFFORT_ID}}] {{EFFORT_TITLE}}
