@@ -161,12 +161,15 @@ Upon engineer sign-off (or when executing post-merge sync):
      git pull origin <base-branch> 2>/dev/null || true
      git merge --squash "effort/<project-name>/<effort-id>"
      git commit -m "[<project-name>][<effort-id>] Merge: <Effort Title>"
-     git branch -D "effort/<project-name>/<effort-id>"
      ```
-2. **Remove Isolated Worktree**:
+2. **Remove Isolated Worktree & Delete Local Branch**:
+   Remove the worktree **before** deleting the effort branch (Git refuses `git branch -D` while a branch is checked out in an active worktree):
    ```bash
    git worktree remove ".worktrees/<project-name>-<effort-id>" 2>/dev/null || true
    git worktree prune
+   if git show-ref --verify --quiet "refs/heads/effort/<project-name>/<effort-id>"; then
+     git branch -D "effort/<project-name>/<effort-id>"
+   fi
    ```
 3. **Update Documentation & Tracker**:
    - **If Tracker is `local`**:

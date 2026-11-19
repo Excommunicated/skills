@@ -36,17 +36,22 @@ git branch -d "effort/<project-name>/<effort-id>"
 
 ## 2. Test & Build Runner Auto-Detection
 
-When verifying acceptance criteria, inspect the repository configuration to run the appropriate build and test commands:
+When verifying acceptance criteria, inspect the repository configuration (preferring `Makefile` targets when present) to build dependencies and run the appropriate build and test commands:
 
 | Stack / Ecosystem | Detection Indicator | Verification Command |
 | :--- | :--- | :--- |
+| **Makefile** | `Makefile` | `make test`, `make build` |
 | **Node / TypeScript** | `package.json` | `npm test` (or `pnpm test` / `yarn test` / `bun test`), `npm run build` |
 | **Python** | `pyproject.toml`, `setup.py` | `pytest` (or `poetry run pytest` / `pipenv run pytest`) |
 | **Rust** | `Cargo.toml` | `cargo test`, `cargo check` |
 | **Go** | `go.mod` | `go test ./...`, `go build ./...` |
-| **Makefile** | `Makefile` | `make test`, `make build` |
 
 If no test suite exists, run a local syntax check, typecheck (e.g., `tsc --noEmit`), or manual script invocation as specified in the effort's notes.
+
+### A. Building Required Assets in Fresh Worktrees
+Fresh git worktrees omit gitignored directories (`node_modules/`, `frontend/dist/`, or other generated assets required by `go:embed` or test suites).
+- **Never** `cp -R` build artifacts from the root working tree into a worktree.
+- Instead, build the required assets in-place inside `<work-dir>` using the repository's `Makefile` targets (for example, `make -C <worktree> frontend-install frontend-build` or `make -C <worktree> test`).
 
 ---
 

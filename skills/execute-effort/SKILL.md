@@ -82,7 +82,8 @@ Within `<work-dir>`:
    - Follow existing project conventions, formatting, and abstractions.
 2. **Build & Test Verification**:
    - Auto-detect test/build tools using [references/execution-guide.md](references/execution-guide.md).
-   - Run the appropriate test and build commands (e.g., `npm test`, `pytest`, `cargo test`, `make build`).
+   - In a fresh git worktree, gitignored dependencies and embedded build assets (such as `frontend/dist` for `go:embed`) are absent initially; always invoke the repository's `Makefile` targets inside `<work-dir>` (e.g., `make frontend-install && make frontend-build`, `make build`, `make test`) to generate required assets rather than copying them from the root checkout.
+   - Run the appropriate test and build commands (e.g., `make test`, `npm test`, `pytest`, `cargo test`, `make build`).
    - Add new tests if required to cover the new functionality.
    - Verify that all acceptance criteria checkboxes pass.
 
@@ -150,6 +151,6 @@ Within `<work-dir>`:
 3. **Prompt User**:
    - Ask the user:
      > "Would you like me to update the `execute-effort` skill with any improvements based on this run?"
-   - If approved, apply updates directly to `~/.agents/skills/execute-effort/`.
+   - If approved, apply updates directly to `/Users/matt/.gemini/config/plugins/skills/skills/execute-effort/` (or `~/.agents/skills/execute-effort/`).
 
 **Completion Criterion:** Self-evaluation performed and user feedback prompted.

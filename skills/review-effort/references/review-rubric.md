@@ -75,7 +75,6 @@ gh pr list --head "effort/<project-name>/<effort-id>" --state open --json number
   git pull origin <base-branch> 2>/dev/null || true
   git merge --squash "effort/<project-name>/<effort-id>"
   git commit -m "[<project-name>][<effort-id>] Merge: <Effort Title>"
-  git branch -D "effort/<project-name>/<effort-id>"
   ```
 
 ### C. Worktree Cleanup
@@ -83,6 +82,9 @@ After a successful merge or fast-forward, remove the isolated worktree:
 ```bash
 git worktree remove ".worktrees/<project-name>-<effort-id>" 2>/dev/null || true
 git worktree prune
+if git show-ref --verify --quiet "refs/heads/effort/<project-name>/<effort-id>"; then
+  git branch -D "effort/<project-name>/<effort-id>"
+fi
 ```
 
 ---
