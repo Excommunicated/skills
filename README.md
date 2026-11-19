@@ -30,7 +30,7 @@ flowchart LR
 | **03** | [`tech-design`](skills/tech-design/SKILL.md) | Reads real source code to produce a technical design with an explicit Requirements Traceability Matrix; supports iterative updates. | `technical-design.md`, resolved tech questions |
 | **04** | [`plan-effort`](skills/plan-effort/SKILL.md) | Decomposes architecture into vertical, independently shippable work efforts (`WE-{NN}` ~1 day), feature flags, and DAG plan. | `implementation-plan.md`, `WE-{NN}` files/issues |
 | **05** | [`execute-effort`](skills/execute-effort/SKILL.md) | Implements an individual effort in an isolated git worktree (`.worktrees/`), verifies automated tests/builds, and commits. | Clean commit, `review_ready` branch/PR |
-| **06** | [`review-effort`](skills/review-effort/SKILL.md) | Conducts two-axis verification (spec + tests), squash-merges into base branch, removes worktree, and announces unblocked WEs. | Merged branch, cleaned worktree, unblocked WEs |
+| **06** | [`review-effort`](skills/review-effort/SKILL.md) | Pre-checks remote PR status (`gh pr list`), conducts two-axis verification, squash-merges or fast-forwards base branch, removes worktree, and announces unblocked WEs. | Merged/fast-forwarded branch, cleaned worktree, unblocked WEs |
 | **07** | [`complete-project`](skills/complete-project/SKILL.md) | Final scope reconciliation, feature flag disposition (canary/retire), workspace hygiene, and changelog/release notes. | `summary.md`, `project.yml` (`completed`) |
 
 ---
