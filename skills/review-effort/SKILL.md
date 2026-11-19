@@ -70,7 +70,7 @@ Inspect, verify, and merge an effort created by `execute-effort`. Pre-check remo
      - Proceed with worktree location, two-axis verification, and subsequent squash merge via `gh pr merge <pr-number> --squash --delete-branch` followed by fast-forwarding `<base-branch>`.
 
    - **Case C: No Remote PR Found (Local Branch)**:
-     - No PR exists remotely or GitHub CLI is unavailable.
+     - No PR exists remotely, the effort branch was never pushed to `origin` (`! git show-ref --verify --quiet "refs/remotes/origin/effort/<project-name>/<effort-id>"`), or GitHub CLI is unavailable/offline in a sandboxed environment.
      - Fall back to standard local verification and local branch squash merge.
 
 2. **Locate Working Tree**:
@@ -107,7 +107,8 @@ Follow [references/review-rubric.md](references/review-rubric.md):
 - Confirm changes adhere to `technical-design.md` and introduce no out-of-scope modifications or phantom code.
 
 ### Axis B: Automated Test & Quality Check
-- Within `<target-dir>`, execute the automated test and build commands (e.g., `npm test`, `pytest`, `cargo test`, `make test`).
+- Within `<target-dir>`, execute the automated test and build commands (e.g., `npm test`, `pytest`, `cargo test`, `make test`, `go test -race ./...`).
+- If running inside a sandbox that restricts local loopback socket binding (`127.0.0.1` / `httptest.NewServer`), either re-run loopback listener tests outside the sandbox or document any `-skip` flags used in the verification summary.
 - Check code hygiene:
   - Zero debug print statements (`console.log`, `print()`, breakpoints).
   - No committed secrets or `.env` files.
@@ -163,9 +164,9 @@ Upon engineer sign-off (or when executing post-merge sync):
      git commit -m "[<project-name>][<effort-id>] Merge: <Effort Title>"
      ```
 2. **Remove Isolated Worktree & Delete Local Branch**:
-   Remove the worktree **before** deleting the effort branch (Git refuses `git branch -D` while a branch is checked out in an active worktree):
+   Remove the worktree **before** deleting the effort branch (Git refuses `git branch -D` while a branch is checked out in an active worktree). Because in-worktree builds often generate gitignored directories (e.g., `bin/`, `frontend/dist/`, `frontend/node_modules/`) that cause plain `git worktree remove` to fail, verify tracked files are clean and use `--force` (or remove gitignored build directories first):
    ```bash
-   git worktree remove ".worktrees/<project-name>-<effort-id>" 2>/dev/null || true
+   git worktree remove --force ".worktrees/<project-name>-<effort-id>"
    git worktree prune
    if git show-ref --verify --quiet "refs/heads/effort/<project-name>/<effort-id>"; then
      git branch -D "effort/<project-name>/<effort-id>"
@@ -218,6 +219,6 @@ Upon engineer sign-off (or when executing post-merge sync):
 3. **Prompt User**:
    - Ask the user:
      > "Would you like me to update the `review-effort` skill with any improvements based on this run?"
-   - If approved, apply updates directly to `~/.agents/skills/review-effort/`.
+   - If approved, apply updates directly to `~/.gemini/config/plugins/skills/skills/review-effort/` (or `~/.agents/skills/review-effort/` if installed there).
 
 **Completion Criterion:** Self-evaluation performed and user feedback prompted.

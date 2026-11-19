@@ -19,6 +19,7 @@ This rubric guides the verification, diff inspection, and merge procedures durin
 1. **Automated Verification**:
    - Run project builds, type checks, and test suites within the worktree.
    - Verify that all new unit or integration tests pass, and no regression occurs in existing tests.
+   - In sandboxed environments that block local loopback socket binding (`127.0.0.1` / `httptest.NewServer`), run loopback listener tests outside the sandbox or explicitly report any skipped tests in the verification summary.
 2. **Code Cleanliness & Hygiene**:
    - No leftover debug artifacts (`console.log`, `print()`, debugger breakpoints, `TODO` markers).
    - No commented-out code blocks.
@@ -78,9 +79,9 @@ gh pr list --head "effort/<project-name>/<effort-id>" --state open --json number
   ```
 
 ### C. Worktree Cleanup
-After a successful merge or fast-forward, remove the isolated worktree:
+After a successful merge or fast-forward, remove the isolated worktree using `--force` so gitignored build outputs created inside the worktree (e.g., `bin/`, `frontend/dist/`, `frontend/node_modules/`) do not block removal or prevent `git branch -D`:
 ```bash
-git worktree remove ".worktrees/<project-name>-<effort-id>" 2>/dev/null || true
+git worktree remove --force ".worktrees/<project-name>-<effort-id>"
 git worktree prune
 if git show-ref --verify --quiet "refs/heads/effort/<project-name>/<effort-id>"; then
   git branch -D "effort/<project-name>/<effort-id>"
