@@ -44,6 +44,7 @@ flowchart LR
 
 5. **Execute Work Effort (`execute-effort`)**:
    - Implements a single work effort in an isolated git worktree under `.worktrees/<project-name>-<effort-id>`.
+   - When a worktree requires gitignored dependencies or embedded build assets (e.g., `frontend/dist` for `go:embed`), builds them in-place inside the worktree using the project's `Makefile` targets (e.g., `make frontend-install && make frontend-build`, or `make test`) rather than copying build artifacts from the main workspace.
    - Works through the effort checklist and executes automated test/build suites to verify all acceptance criteria.
    - Produces a structured commit and marks the effort `review_ready`.
 

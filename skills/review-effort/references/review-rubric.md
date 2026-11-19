@@ -52,14 +52,16 @@ When a defect or gap is identified during review:
   git pull origin <base-branch> 2>/dev/null || true
   git merge --squash "effort/<project-name>/<effort-id>"
   git commit -m "[<project-name>][<effort-id>] Merge: <Effort Title>"
-  git branch -D "effort/<project-name>/<effort-id>"
   ```
 
-### B. Worktree Cleanup
-After a successful merge, remove the isolated worktree:
+### B. Worktree & Branch Cleanup
+After a successful merge, remove the isolated worktree **before** deleting the local effort branch (Git refuses `git branch -D` while a branch is checked out in an active worktree):
 ```bash
-git worktree remove ".worktrees/<project-name>-<effort-id>"
+git worktree remove ".worktrees/<project-name>-<effort-id>" 2>/dev/null || true
 git worktree prune
+if git show-ref --verify --quiet "refs/heads/effort/<project-name>/<effort-id>"; then
+  git branch -D "effort/<project-name>/<effort-id>"
+fi
 ```
 
 ---
